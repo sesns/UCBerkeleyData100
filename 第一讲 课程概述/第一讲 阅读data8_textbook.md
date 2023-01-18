@@ -1,4 +1,4 @@
-# 1.什么是数据科学
+# 什么是数据科学
 
     数据科学是关于通过探索，预测和推论从大量且多样的数据中得出有用的结论
 
@@ -16,55 +16,56 @@
 
 - 对于推论，有统计测试和模型
 
-## 1.1介绍
-
-#### 1.1.1运算工具
+## 运算工具
 
     本书采用python3及其一些数据可视化工具
 
-#### 1.1.2统计技术
+## 统计技术
 
     统计的最重要贡献之一是描述观察和结论之间关系的一致且精确的词汇。
 
     本文涉及到以下问题：测试假设，估计置信度和预测未知数量等
 
-## 1.3绘制经典
-
-    从网上抓取两本经典书的文本，并将其转换成章节的列表
-
-```python
-# Read two books, fast!
-
-huck_finn_url = 'https://www.inferentialthinking.com/data/huck_finn.txt'
-huck_finn_text = read_url(huck_finn_url)
-huck_finn_chapters = huck_finn_text.split('CHAPTER ')[44:]
-
-little_women_url = 'https://www.inferentialthinking.com/data/little_women.txt'
-little_women_text = read_url(little_women_url)
-little_women_chapters = little_women_text.split('CHAPTER ')[1:]
-```
-
-```python
-# Display the chapters of Huckleberry Finn in a table.
-
-Table().with_column('Chapters', huck_finn_chapters)    
-```
-
-    结果
-
-| Chapters                                                     |
-|:------------------------------------------------------------:|
-| I. YOU don't know about me without you have read a book ...  |
-| II. WE went tiptoeing along a path amongst the trees bac ... |
-| III. WELL, I got a good going-over in the morning from o ... |
-| IV. WELL, three or four months run along, and it was wel ... |
-| V. I had shut the door to. Then I turned around and ther ... |
-| VI. WELL, pretty soon the old man was up and around agai ... |
-| VII. "GIT up! What you 'bout?" I opened my eyes and look ... |
-| VIII. THE sun was up so high when I waked that I judged ...  |
-| IX. I wanted to go and look at a place right about the m ... |
-| X. AFTER breakfast I wanted to talk about the dead man a ... |
-
-... (33 rows omitted)
 
 
+# 因果和实验
+
+## 概念
+
+实验和结果之间的任何关系被称为**关联**。如果实验导致结果发生，那么这个关联是**因果关系**。
+
+## 实验组和对照组
+
+科学家使用比较来确定实验与结果之间的关联，即实验和结果之间存在联系。他们比较了一组接受实验的个体（**实验组**）的结果，和一组没有接受实验的个体的结果（**对照组**）。
+
+## 混淆
+
+在一项观察研究中，如果实验组和对照组在实验以外的方面有所不同，则很难对因果关系作出结论。 两组之间在**实验以外**的根本区别被称为**混淆因素**，因为当你试图得出结论时，它可能会混淆你。
+
+## 随机化
+
+**避免混淆**的一个很好的方法是，将个体随机分配到实验和对照组，然后将实验给予分配到实验组的人。随机化使两组除了实验之外都相似。如果你能够将个体随机分为实验组和对照组，则你正在进行一项**随机对照试验**（RCT）
+
+有时候，人们在实验中的反应会受到他们知道他们在哪个群体的影响。所以你可能希望进行**盲法实验**，其中个体不知道他们是在实验组还是对照组。为了使它有效，你必须把安慰剂给控制组，这是一种和实验看起来完全一样的东西，但实际上没有效果。
+
+在某些情况下，即使目标是调查因果关系，也不可能进行随机对照实验。
+
+随机化的优点是
+
+- 它使我们能够以数学方式，计算随机化产生实验和对照组的可能性。
+
+- 它使我们能够对实验组和对照组之间的差异作出**精确的数学表述**。这反过来帮助我们对实验是否有效作出正确的结论。
+
+## 因果关系
+
+因果关系的建立往往分两个阶段进行。首先，观察一个关联。接下来，更仔细的分析是否存在因果关系。
+
+## 总结
+
+在本课程中，你将学习如何进行和分析你自己的随机实验。这将涉及比本节更多的细节。
+
+**目前，只需关注主要思想：尝试建立因果关系，如果可能，进行随机对照实验。**
+
+注意：如果你正在进行一项观察研究，你可能能够建立联系而不是因果关系。在根据观察研究得出因果关系的结论之前，要非常小心混淆因素。
+
+    
