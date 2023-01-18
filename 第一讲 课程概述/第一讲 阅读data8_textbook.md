@@ -69,3 +69,369 @@
 注意：如果你正在进行一项观察研究，你可能能够建立联系而不是因果关系。在根据观察研究得出因果关系的结论之前，要非常小心混淆因素。
 
     
+
+# Python编程
+
+## 运算符
+
+| 表达式类型 | 运算符     | 示例         | 值       |
+|:-----:|:-------:|:----------:|:-------:|
+| 加法    | `+`     | `2 + 3`    | 5       |
+| 减法    | `-`     | `2 - 3`    | -1      |
+| 乘法    | `*`     | `2 * 3`    | 6       |
+| 除法    | `/`     | `7 / 3`    | 2.66667 |
+| 取余    | `%`     | `7 % 3`    | 1       |
+| 指数    | `**`    | `2 ** 0.5` | 1.41421 |
+| 括号    | （）[] {} |            |         |
+
+## 数值
+
+整数在 Python 语言中称为`int`值。 它们只能表示没有小数部分的整数（负数，零或正数）
+
+实数在 Python 语言中被称为`float`值（或浮点值）。 他们可以表示全部或部分数字，但有一些限制。
+
+当一个`float`值和一个`int`值，通过算术运算符组合在一起时，结果总是一个`float`值。
+
+在大多数情况下，两个整数的组合形成另一个整数，但任何数字（`int`或`float`）除以另一个将是一个`float`值。
+
+浮点数只能表示任何数字的 15 或 16 位有效数字；剩下的精度就会丢失。 如果一个计算的结果是一个非常大的数字，那么它被表示为无限大。 如果结果是非常小的数字，则表示为零。
+
+## 名称
+
+名称通过赋值语句在 Python 中得到一个值。 在赋值中，名称后面是`=`，再后面是任何表达式。 `=`右边的表达式的值被赋给名称。
+
+名称必须以字母开头，但可以包含字母和数字。 名称不能包含空格；相反，通常使用下划线字符`_`来替换每个空格
+
+## 函数
+
+一些函数默认是可用的，比如`abs`和`round`，但是大部分内置于 Python 语言的函数都存储在一个称为模块的函数集合中。**导入语句用于访问模块**，如`math`或`operator`。
+
+```py
+import math
+import operator
+math.sqrt(operator.add(4, 5))
+3.0
+```
+
+## 类型
+
+每个值都有一个类型，内建的`type`函数返回任何表达式的结果的类型
+
+## 字符串
+
+单引号和双引号都可以用来创建字符串：`'hi'`和`"hi"`是相同的表达式。 双引号通常是首选，因为它们允许在字符串中包含单引号。
+
+字符串也有一些方法，例如replace、upper
+
+```py
+"loud".upper()
+'LOUD'
+'hitchhiker'.replace('hi', 'ma')
+'matchmaker'
+s = "train"
+t = s.replace('t', 'ing')
+u = t.replace('in', 'de')
+u
+'degrade'
+```
+
+## 比较运算符
+
+一个表达式可以包含多个比较
+
+| 比较   | 运算符  | True 示例  | False 示例 |
+| ---- | ---- | -------- | -------- |
+| 小于   | `<`  | `2 < 3`  | `<`      |
+| 大于   | `>`  | `3 > 2`  | `>`      |
+| 小于等于 | `<=` | `<=`     | `3 <= 2` |
+| 大于等于 | `>=` | `>=`     | `2 >= 3` |
+| 等于   | `==` | `==`     | `3 == 2` |
+| 不等于  | `!=` | `3 != 2` | `!=`     |
+
+## 集合
+
+Python 中有很多种类的集合，我们在这门课中主要使用数组。
+
+在几个值上调用`make_array`函数，将它们放到一个数组中，这是一种顺序集合。
+
+集合允许我们使用单个名称，将多个值传递给一个函数。 例如，`sum`函数计算集合中所有值的和，`len`函数计算其长度。
+
+## 数组
+
+`make_array`函数可以用来创建数值的数组。
+
+数组也可以包含字符串或其他类型的值，但是**单个数组只能包含单一类型的数据。**
+
+```py
+english_parts_of_speech = make_array("noun", "pronoun", "verb", "adverb", "adjective", "conjunction", "preposition", "interjection")
+```
+
+数组可以用在算术表达式中来计算其内容。 当数组与单个数组合时，该数与数组的每个元素组合。
+
+```py
+(9/5) * highs + 32
+array([ 56.48  ,  57.8966,  58.253 ,  59.2952])
+```
+
+数组也有方法，这些方法是操作数组值的函数。
+
+```py
+highs.size
+4
+highs.sum()
+57.736000000000004
+highs.mean()
+14.434000000000001
+```
+
+## 数组上的函数
+
+`numpy`包，在程序中缩写为`np`，为 Python 程序员提供了创建和操作数组的，方便而强大的函数。
+
+```py
+import numpy as np
+```
+
+每个这些函数接受数组作为参数，并返回单个值。
+
+| 函数                 | 描述                    |
+| ------------------ | --------------------- |
+| `np.prod`          | 将所有元素相乘               |
+| `np.sum`           | 将所有元素相加               |
+| `np.all`           | 测试是否所有元素是真值 （非零数值是真值） |
+| `np.any`           | 测试是否任意元素是真值（非零数值是真值）  |
+| `np.count_nonzero` | 计算非零元素的数量             |
+
+每个这些函数接受字符串数组作为参数，并返回数组。
+
+| 函数                  | 描述                    |
+| ------------------- | --------------------- |
+| `np.char.lower`     | 将每个元素变成小写             |
+| `np.char.upper`     | 将每个元素变成大写             |
+| `np.char.strip`     | 移除每个元素开头或末尾的空格        |
+| `np.char.isalpha`   | 每个元素是否只含有字母（没有数字或者符号） |
+| `np.char.isnumeric` | 每个元素是否只含有数字（没有字母）     |
+
+每个这些函数接受字符串数组和一个搜索字符串。
+
+| 函数                 | 描述                    |
+| ------------------ | --------------------- |
+| np.char.count      | 在数组的元素中，计算搜索字符串的出现次数  |
+| np.char.find       | 在每个元素中，搜索字符串的首次出现位置   |
+| np.char.rfind      | 在每个元素中，搜索字符串的最后一次出现位置 |
+| np.char.startswith | 每个字符串是否以搜索字符串起始       |
+
+## 范围
+
+范围是一个数组，按照递增或递减的顺序排列，每个元素按照一定的间隔分开。
+
+范围使用`np.arange`函数来定义，该函数接受一个，两个或三个参数：起始值，终止值和“步长”。
+
+如果将一个参数传递给`np.arange`，那么它将成为终止值，其中`start = 0`，`step = 1`。 两个参数提供了起始值和终止值，`step = 1`。 三个参数明确地提供了起始值，终止值和步长。
+
+**范围始终包含其`start`值，但不包括其`end`值。 它按照`step`计数，并在到达`end`之前停止。**
+
+```py
+np.arange(5)
+array([0, 1, 2, 3, 4])
+
+np.arange(3, 9)
+array([3, 4, 5, 6, 7, 8])
+
+np.arange(3, 30, 5)
+array([ 3,  8, 13, 18, 23, 28])
+
+
+np.arange(1.5, -2, -0.5)
+array([ 1.5,  1. ,  0.5,  0. , -0.5, -1. , -1.5])
+```
+
+# 表格
+
+## 模块导入
+
+```py
+from datascience import *
+```
+
+## 创建表格
+
+创建一个新的空表格
+
+```py
+Table()
+```
+
+`with_columns`方法将新列添加到表中
+
+```py
+Table().with_columns('XXX', make_array(8, 34, 5))
+
+Table().with_columns(
+    'Number of petals', make_array(8, 34, 5),
+    'Name', make_array('lotus', 'sunflower', 'rose'))
+
+flowers = Table().with_columns(
+    'Number of petals', make_array(8, 34, 5),
+    'Name', make_array('lotus', 'sunflower', 'rose')
+)
+
+flowers.with_columns(
+    'Color', make_array('pink', 'yellow', 'red')
+)
+```
+
+通过使用`Table`的`read_table`方法读入CSV文件创建表格
+
+```python
+minard = Table.read_table('minard.csv')
+minard
+```
+
+## 列的选取
+
+`show`展示行，允许我们指定行数，缺省值（没有指定）是表的所有行。
+
+```py
+nba_salaries.show(3)
+```
+
+通过使用`relabeled`修改列标签。这会创建新的表格，并保留原表格不变。 
+
+```python
+minard.relabeled('City', 'City Name')
+```
+
+查看表格中列的数量、行的数量
+
+```py
+minard.num_columns
+5
+minard.num_rows
+8
+```
+
+访问表格中某一列数组，参数为列名或列下标
+
+列下标从0开始
+
+```py
+minard.column('Survivors')
+array([145000, 140000, 127100, 100000,  55000,  24000,  20000,  12000])
+
+minard.column(4)
+array([145000, 140000, 127100, 100000,  55000,  24000,  20000,  12000])
+```
+
+访问列的某一条目
+
+```py
+minard.column(4).item(0)
+145000
+minard.column(4).item(5)
+24000
+```
+
+用选项`PercentFormatter`调用`set_format`方法，使得列中的比例显示为百分比
+
+```py
+minard.set_format('Percent Surviving', PercentFormatter)
+```
+
+`select`方法创建一个新表，仅仅包含指定的列
+
+```py
+minard.select('Longitude', 'Latitude')
+minard.select(0, 1)
+```
+
+另一种创建新表，包含列集合的方式，是`drop`你不想要的列。
+
+```py
+minard.drop('Longitude', 'Latitude', 'Direction')
+```
+
+## 行的选取
+
+take()方法指定行，可以传入单个索引，也可以传入一系列索引
+
+```py
+nba.take(0)
+nba.take(np.arange(3, 6)) //选取第4、5、6行
+```
+
+where选取具有指定特征的行，特征由are指定
+
+`where`的第一个参数是列标签，`where`的第二个参数是用于指定特征的方式。
+
+它的输出是一个表格，列与原始表格相同，但只有特征出现的行。
+
+通过重复使用`where`，你可以访问具有多个指定特征的行
+
+```py
+original_table_name.where(column_label_string, are.condition)
+
+nba.where('POSITION', 'PG').where('SALARY', are.above(15))
+```
+
+这里有一些谓词，你可能会觉得有用。 请注意，`x`和`y`是数字，`STRING`是一个字符串，`Z`是数字或字符串；你必须指定这些，取决于你想要的特征
+
+| 谓词                              | 描述              |
+| ------------------------------- | --------------- |
+| `are.equal_to(Z)`               | 等于`Z`           |
+| `are.above(x)`                  | 大于`x`           |
+| `are.above_or_equal_to(x)`      | 大于等于`x`         |
+| `are.below(x)`                  | 小于`x`           |
+| `are.below_or_equal_to(x)`      | 小于等于`x`         |
+| `are.between(x, y)`             | 大于等于`x`，小于`y`   |
+| `are.strictly_between(x, y)`    | 大于`x`，小于`y`     |
+| `are.between_or_equal_to(x, y)` | 大于等于`x`，小于等于`y` |
+| `are.containing(S)`             | 包含字符串`S`        |
+
+| 谓词                    | 描述     |
+| --------------------- | ------ |
+| `are.not_equal_to(Z)` | 不等于`Z` |
+| `are.not_above(x)`    | 不大于`x` |
+
+## 对行排序
+
+`sort`的参数是列标签或索引，默认升序
+
+参数descending=True表示降序
+
+```py
+nba_salaries.sort('PLAYER')
+nba.sort('SALARY', descending=True)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
