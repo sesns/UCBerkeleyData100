@@ -570,3 +570,88 @@ name_of_table.method(column_label_of_common_axis)
 ![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-19_22-09-41.png)
 ![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-19_22-09-47.png)
 ![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-19_22-10-21.png)
+
+# 函数和表格
+
+## 定义函数
+
+我们通过编写`def`来开始定义任何函数。
+
+一个函数可以有多个参数
+
+ 文档字符串通常在开始和结束处使用三个引号来定义，这允许字符串跨越多行。 第一行通常是函数的完整但简短的描述，而下面的行则为将来的用户提供了进一步的指导。
+
+函数通过将参数表达式放入函数名称后面的括号来调用。 任何独立定义的函数都是这样调用的。 你也看到了方法的例子，这些方法就像函数一样，但是用点符号来调用
+
+![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/d3dbf73cbcc6c06d81d679245441855c_566x429.jpg)
+
+```py
+# Our first function definition
+
+def double(x):
+    """ Double x """
+    return 2*x
+```
+
+```py
+any_name = 42
+double(any_name)
+84
+
+
+double(make_array(3, 4, 5))
+array([ 6,  8, 10])
+```
+
+## 在列上应用函数
+
+`apply`方法在列的每个元素上调用一个函数，返回函数调用完后的新数组。输入值的列的名称必须是字符串，仍然出现在引号内
+
+```py
+def cut_off_at_100(x):
+    """The smaller of x and 100"""
+    return min(x, 100)
+
+//ages是一张表，’Age‘是列名
+ages.apply(cut_off_at_100, 'Age')
+array([ 17, 100,  52, 100,   6, 100])
+```
+
+## 引用函数
+
+我们可以引用任何函数，通过写下它的名字，而没有实际调用它
+
+```py
+cut_off_at_100
+<function __main__.cut_off_at_100>
+```
+
+我们可以为函数定义新名称。
+
+```py
+cut_off = cut_off_at_100
+```
+
+## 单变量分类下聚合函数的使用
+
+    单参数下，使用group按分类变量对表格进行分组，统计每组内数值个数
+
+    第一个参数为列标签，该列作为分类变量
+
+    第二个可选参数为函数，用于聚合组内的值，就像sql里的聚合函数
+
+- sum
+
+- max
+
+- ……
+
+```py
+cones.group('Flavor', max)
+
+cones.group('Flavor', sum)
+```
+
+## 多变量交叉分类
+
+
