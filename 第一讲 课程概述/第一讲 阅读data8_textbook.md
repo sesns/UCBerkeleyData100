@@ -543,4 +543,30 @@ bin_counts = millions.bin('Adjusted Gross', bins=np.arange(300,2001,100))
 
 **频率分布直方图（hist）帮助我们可视化数轴上数据最集中的地方，特别是当桶不均匀的时候。**
 
+## 条形图和直方图的区别
 
+- 条形图为每个类别展示一个数量。 它们通常用于显示**类别变量**的分布。 直方图显示**数值变量**的分布。
+- 条形图中的所有条形都具有相同的宽度，相邻的条形之间有相等的间距。 直方图的条形可以具有**不同的宽度**，并且是连续的。
+- 条形图中条形的**长度**（或高度，如果垂直绘制）与每个类别的值成正比。 直方图中条形的高度是密度的度量；直方图中的条形的**面积**与桶中的条目数量成正比。
+
+## 重叠的图表
+
+在这一章中，我们学习了如何通过绘制图表来显示数据。 这种可视化的常见用法是比较两个数据集。 在本节中，我们将看到如何叠加绘图，即将它们绘制在单个图形中，拥有同一对坐标轴
+
+为了使重叠有意义，重叠的图必须表示相同的变量并以相同的单位进行测量。
+
+**为了绘制重叠图，可以用相同的方法调用`scatter`，`plot`和`barh`方法。 对于`scatter`和`plot`，一列必须作为所有叠加图的公共横轴。 对于`barh`，一列必须作为一组类别的公共轴。 一般的调用看起来像这样：**
+
+```py
+name_of_table.method(column_label_of_common_axis, array_of_labels_of_variables_to_plot)
+```
+
+更常见的是，我们首先仅仅选取图表所需的列。之后通过指定共同轴上的变量来调用方法。
+
+```py
+name_of_table.method(column_label_of_common_axis)
+```
+
+![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-19_22-09-41.png)
+![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-19_22-09-47.png)
+![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-19_22-10-21.png)
