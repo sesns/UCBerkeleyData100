@@ -446,8 +446,6 @@ century_21.plot('Year', 'Number of Movies')
 
 分类变量“口味”的值是巧克力，草莓和香草。 表格显示了每种口味的纸盒数量。
 
-
-
 如何生成分布表？`Table`的`group`方法为我们计算分布变量不同的值出现在表中的频率，生成分布表
 
 ```py
@@ -632,11 +630,11 @@ cut_off_at_100
 cut_off = cut_off_at_100
 ```
 
-## 单变量分类下聚合函数的使用
+## 变量分类下聚合函数的使用
 
-    单参数下，使用group按分类变量对表格进行分组，统计每组内数值个数
+    使用group按分类变量对表格进行分组，统计每组内数值个数
 
-    第一个参数为列标签，该列作为分类变量
+    第一个参数为列标签，若干列作为分类变量
 
     第二个可选参数为函数，用于聚合组内的值，就像sql里的聚合函数
 
@@ -648,10 +646,123 @@ cut_off = cut_off_at_100
 
 ```py
 cones.group('Flavor', max)
-
 cones.group('Flavor', sum)
+more_cones.group(['Flavor', 'Color'])
+more_cones.group(['Flavor', 'Color'], sum)
 ```
 
-## 多变量交叉分类
+| Flavor     | Color       | Price sum |
+| ---------- | ----------- | --------- |
+| bubblegum  | pink        | 4.75      |
+| chocolate  | dark brown  | 10.5      |
+| chocolate  | light brown | 4.75      |
+| strawberry | pink        | 8.8       |
+
+| Flavor     | count |
+| ---------- | ----- |
+| bubblegum  | 1     |
+| chocolate  | 3     |
+| strawberry | 2     |
+
+## 数据透视表
+
+两个分类变量，列是分类变量的值，行是另一分类变量的值，形成了一个网格，由两个分类变量定位一个位置，该位置的值表示该组下的行个数
+
+采用pivot方法生成数据透视表，`pivot`的第一个参数是列标签，包含的值将用于在结果中形成新的列。第二个参数是用于行的列标签。结果提供了原始表的所有行的计数
+
+像`group`一样，`pivot`可以和其他参数一同使用，来发现每个类别组合的特征。名为`values`的第三个可选参数表示一列值，它们替换网格的每个单元格中的计数。所有这些值将不会显示，但是；第四个参数`collect`表示如何将它们全部汇总到一个聚合值中，来显示在单元格中。
+
+由`pivot`生成的表格更易于阅读，因而更易于分析。 透视表的优点是它将分组的值放到相邻的列中，以便它们可以进行组合和比较。
+
+```py
+more_cones.pivot('Flavor', 'Color')
+```
+
+| Color       | bubblegum | chocolate | strawberry |
+| ----------- | --------- | --------- | ---------- |
+| dark brown  | 0         | 2         | 0          |
+| light brown | 0         | 1         | 0          |
+| pink        | 1         | 0         | 2          |
+
+```py
+more_cones.pivot('Flavor', 'Color', values='Price', collect=sum)
+```
+
+| Color       | bubblegum | chocolate | strawberry |
+| ----------- | --------- | --------- | ---------- |
+| dark brown  | 0         | 10.5      | 0          |
+| light brown | 0         | 4.75      | 0          |
+| pink        | 4.75      | 0         | 8.8        |
+
+| Personal Income     | Bachelor's degree or higher | College, less than 4-yr degree | High school or equivalent | No high school diploma |
+| ------------------- | --------------------------- | ------------------------------ | ------------------------- | ---------------------- |
+| A: 0 to 4,999       | 6.75                        | 12.67                          | 18.46                     | 28.29                  |
+| B: 5,000 to 9,999   | 3.82                        | 10.43                          | 9.95                      | 14.02                  |
+| C: 10,000 to 14,999 | 5.31                        | 10.27                          | 11                        | 15.61                  |
+| D: 15,000 to 24,999 | 9.07                        | 17.3                           | 19.9                      | 20.56                  |
+| E: 25,000 to 34,999 | 8.14                        | 14.04                          | 14.76                     | 10.91                  |
+| F: 35,000 to 49,999 | 13.17                       | 14.31                          | 12.44                     | 6.12                   |
+| G: 50,000 to 74,999 | 18.7                        | 11.37                          | 8.35                      | 3.11                   |
+| H: 75,000 and over  | 35.03                       | 9.62                           | 5.13                      | 1.38                   |
+
+## 按列连接表
+
+join方法连接两个表
+
+```py
+table1.join(table1_column_for_joining, table2, table2_column_for_joining)
+```
+
+| Flavor     | Price |
+| ---------- | ----- |
+| strawberry | 3.55  |
+| vanilla    | 4.75  |
+| chocolate  | 6.55  |
+| strawberry | 5.25  |
+| chocolate  | 5.75  |
+
+| Kind       | Stars |
+| ---------- | ----- |
+| strawberry | 2.5   |
+| chocolate  | 3.5   |
+| vanilla    | 4     |
+
+```py
+rated = 表1.join('Flavor', 表2, 'Kind')
+rated
+```
+
+| Flavor     | Price | Stars |
+| ---------- | ----- | ----- |
+| chocolate  | 6.55  | 3.5   |
+| chocolate  | 5.75  | 3.5   |
+| strawberry | 3.55  | 2.5   |
+| strawberry | 5.25  | 2.5   |
+| vanilla    | 4.75  | 4     |
+
+**注意**，由于`join`中的第二个表用于扩充第一个表，所以重要的是，第一个表中的每一行在第二个表中只有一个匹配的行。如果第一个表中的某一行在第二个表中没有匹配项，则信息可能丢失。如果第一个表中的某一行在第二个表中有多个匹配项，那么`join`将只选择表2中匹配的第一行，这也是一种信息丢失
+
+## 绘制地图
+
+我们可以使用`Marker.map_table`来绘制地图。 该函数在一个表格上进行操作，该表格的列依次是纬度，经度以及每个点的可选标识符。
+
+| station_id | name                              | lat     | long     | dockcount | landmark | installation |
+| ---------- | --------------------------------- | ------- | -------- | --------- | -------- | ------------ |
+| 2          | San Jose Diridon Caltrain Station | 37.3297 | -121.902 | 27        | San Jose | 8/6/2013     |
+| 3          | San Jose Civic Center             | 37.3307 | -121.889 | 15        | San Jose | 8/5/2013     |
+| 4          | Santa Clara at Almaden            | 37.334  | -121.895 | 11        | San Jose | 8/6/2013     |
+| 5          | Adobe on Almaden                  | 37.3314 | -121.893 | 19        | San Jose | 8/5/2013     |
+| 6          | San Pedro Square                  | 37.3367 | -121.894 | 15        | San Jose | 8/7/2013     |
+| 7          | Paseo de San Antonio              | 37.3338 | -121.887 | 15        | San Jose | 8/7/2013     |
+| 8          | San Salvador at 1st               | 37.3302 | -121.886 | 15        | San Jose | 8/5/2013     |
+| 9          | Japantown                         | 37.3487 | -121.895 | 15        | San Jose | 8/5/2013     |
+| 10         | San Jose City Hall                | 37.3374 | -121.887 | 15        | San Jose | 8/6/2013     |
+| 11         | MLK Library                       | 37.3359 | -121.886 | 19        | San Jose | 8/6/2013     |
+
+```py
+Marker.map_table(stations.select('lat', 'long', 'name'))
+```
+
+![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-20_21-52-38.png)
 
 
