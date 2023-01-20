@@ -765,4 +765,131 @@ Marker.map_table(stations.select('lat', 'long', 'name'))
 
 ![](https://cdn.jsdelivr.net/gh/sesns/picgo_bed/Snipaste_2023-01-20_21-52-38.png)
 
+# 随机性
 
+## python用于随机选择的模块
+
+ 在`numpy`中有一个叫做`random`的子模块，它包含许多涉及随机选择的函数。 其中一个函数称为`choice`。 它从一个数组中随机选取一个项目，选择任何项目都是等可能的。 函数调用是`np.random.choice(array_name)`，其中`array_name`是要从中进行选择的数组的名称。
+
+```py
+two_groups = make_array('treatment', 'control')
+np.random.choice(two_groups)
+'treatment'
+```
+
+可以通过提供第二个参数来重复np.random.choice这个过程，它是重复这个过程的次数。
+
+```py
+np.random.choice(two_groups, 10)
+array(['treatment', 'control', 'treatment', 'control', 'control',
+       'treatment', 'treatment', 'control', 'control', 'control'], 
+      dtype='<U9')
+```
+
+## 比较数组和值
+
+如果我们比较一个数组和一个值，则数组的每个元素都与该值进行比较，并将比较结果求值为布尔值数组。
+
+```py
+tosses = make_array('Tails', 'Heads', 'Tails', 'Heads', 'Heads')
+tosses == 'Heads'
+array([False,  True, False,  True,  True], dtype=bool)
+```
+
+`numpy`方法`count_nonzero`计算数组的非零（即`True`）元素的数量。
+
+```py
+np.count_nonzero(tosses == 'Heads')
+3
+```
+
+## 条件语句
+
+```py
+if <if expression>:
+    <if body>
+elif <elif expression 0>:
+    <elif body 0>
+elif <elif expression 1>:
+    <elif body 1>
+...
+else:
+    <else body>
+```
+
+## for循环
+
+```py
+for i in np.arange(3):
+    print(i)
+0
+1
+2
+```
+
+### 扩展数组
+
+调用`np.append(array_name，value)`将求出一个新的数组，它是由`value`扩展的`array_name`，原数组不变
+
+```py
+pets = make_array('Cat', 'Dog')
+np.append(pets, 'Another Pet')
+array(['Cat', 'Dog', 'Another Pet'], 
+      dtype='<U11')
+
+
+pets
+array(['Cat', 'Dog'], 
+      dtype='<U3')
+```
+
+可以通过将扩展后的数组赋给原始数组来达到拓展原数组的效果
+
+```py
+pets = np.append(pets, 'Another Pet')
+pets
+array(['Cat', 'Dog', 'Another Pet'], 
+      dtype='<U11')
+```
+
+## 事件不会发生的时候
+
+P(事件不发生)=1-P（事件发生）
+
+## 所有结果等可能的时候
+
+P（一个事件发生）= 该事件发生的结果数/所有结果数
+
+## 两个事件必须同时发生时
+
+通常，我们拥有乘法规则：
+
+两个事件同时发生的概率，等于第一个事件发生的概率，乘上第一个事件发生的情况下第二个事件发生的概率。
+
+## 事件以两种不同的方式发生
+
+通常，我们拥有加法规则：
+
+事件发生的概率，等于以第一种方式发生的概率，加上以第二种方式发生的概率。
+
+只要事件正好以两种方式之一发生。
+
+### 至少有……的概率
+
+P(至少有……)=1-P(全都不)
+
+## 确定性样本
+
+当你只是简单地指定，你要选择的集合中的哪些元素时，就不会涉及任何几率，称为确定性样本
+
+## 概率样本
+
+以概率进行抽样得到的样本
+
+总体是抽取样本的所有元素的集合。
+
+## 系统样本
+
+想象一下，总体的所有元素都列出在序列中。 抽样的一种方法是，先从列表中选择一个随机的位置，然后是它后面的等间隔的位置。样本由这些位置上的元素组成。这样的样本被称为系统样本。
+
+### 放回或不放回的随机抽样
