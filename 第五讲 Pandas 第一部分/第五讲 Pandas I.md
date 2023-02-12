@@ -114,4 +114,22 @@ elections.sample(10)
 elections.sample(10,replace=True)
 ```
 
+## Pandas里的一些工具
+
+#### dataframe的一些方法
+
+head返回前几行
+
+size返回dataframe的项数（其等于行数*列数）
+
+shape返回 行数、列数
+
+describe返回一些计数信息
+
+index有多个方法，返回一些索引信息
+
+columns返回列的一些信息
+
+sort_values(’列名‘，ascending=True or False)用来根据某列排序
+
 
